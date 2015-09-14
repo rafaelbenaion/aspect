@@ -1,14 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>From:</strong>
-  <%= @measure.from %>
-</p>
+<h1>Medidas de <%= @measure.from["email"] %></h1>
 
-<p>
-  <strong>Set:</strong>
-  <%= @measure.set %>
-</p>
+<div class="content">
+  <table>
+    <thead>
+      <tr>
+        <td>Medida</td>
+        <td><strong>Frente</strong></td>
+        <td><strong>Lado</strong></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @front.each do |measure, value_front| %>
+          <tr>
+            <td> <strong><%= measure %></strong></td>
+            <td> <%= value_front %></td>
+            <td> <%= @side[measure] %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<hr />
+<h1>Images</h1>
+<% @images.each do |image| %>
+  <%= image_tag image %>
+<% end %>
+<hr />
 
 <%= link_to 'Edit', edit_measure_path(@measure) %> |
 <%= link_to 'Back', measures_path %>

@@ -68,6 +68,9 @@ class MeasuresController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_measure
       @measure = Measure.find(params[:id])
+      @images = @measure.from.delete "images" 
+      @front = @measure.set["front"]
+      @side = @measure.set["side"]
     end
     def set_measure_params
       @measure.from = params.require("measure").fetch("from")
