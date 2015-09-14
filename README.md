@@ -12,6 +12,7 @@ Dentro do model `Measure` têm apenas dois atributos JSON: `from` com informaç�
 m = Measure.last
 m.set # => {"side"=>{"busto"=>"22.37", "altura"=>"51.63", "cintura"=>"27.9", "quadril"=>"27.9"}, "front"=>{"busto"=>"50.87", "altura"=>"82.87", "cintura"=>"49.85", "quadril"=>"49.85"}}
 m.from # => {"email"=>"jonatasdp@gmail.com"}
+m.images # => [ "http://first-image.uploaded.com/1.png" ]
 ```
 
 # Setup do projeto
