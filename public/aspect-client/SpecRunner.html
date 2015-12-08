@@ -1,0 +1,33 @@
+<!DOCTYPE HTML> <html> <head> <title>Jasmine Spec Runner</title> <link rel="stylesheet" type="text/css" href="bower_components/jasmine/lib/jasmine-core/jasmine.css"> <script type="text/javascript" src="bower_components/jasmine/lib/jasmine-core/jasmine.js"></script> <script type="text/javascript" src="bower_components/jasmine/lib/jasmine-core/jasmine-html.js"></script> <!-- include source files here... --> <!--[if lt IE 9]>
+    <script src="scripts/oldieshim.693a1bc0.js"></script>
+    <![endif]--> <script src="scripts/vendor.2ad8f863.js"></script> <script src="bower_components/tracking/build/data/eye-min.js"></script> <script src="bower_components/tracking/build/data/face-min.js"></script> <script src="bower_components/tracking/build/data/mouth-min.js"></script> <script src="bower_components/jsfeat/build/jsfeat.js"></script> <script src="http://inspirit.github.io/jsfeat/js/frontalface.js"></script> <script src="scripts/scripts.3b300e34.js"></script> <!-- include spec files here... --> <script type="text/javascript" src="test/spec/segmentation_spec.js"></script> <script type="text/javascript">(function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+      /* this is just for our automated tests */
+      window.jasmine_phantom_reporter = new jasmine.ConsoleReporter;
+      jasmineEnv.addReporter(jasmine_phantom_reporter);
+      /*   */
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+
+        jasmineEnv.execute();
+      }
+
+    })();</script>  <body>  
