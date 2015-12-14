@@ -1,5 +1,92 @@
-<!doctype html> <html class="no-js"> <head> <meta charset="utf-8"> <meta name="description" content=""> <meta name="viewport" content="width=device-width"> <!-- Place favicon.ico and apple-touch-icon.png in the root directory --> <link rel="stylesheet" href="styles/main.1c60f69b.css"> <title>Aspect TEST</title>  <body> <!--[if lt IE 7]>
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <title>Aspect TEST</title>
+  </head>
+  <body >
+    <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]--> <div class="container"> <div class="header"> <ul class="nav nav-pills pull-right"> <li><a class="btn" href="#"><span class="glyphicon glyphicon-home"></span> Aspect</a></li> </ul> <h3 class="text-muted">Aspect - biometria - TEST workspace</h3> </div> <div class="aspect-main"> <div class="row"> <video id="video" width="320" height="240" preload autoplay loop muted></video> <canvas id="canvas" width="320" height="240"></canvas> </div> <div class="row"> <canvas style="border: solid 1px black" id="preview" width="320" height="240"></canvas> </div> <div class="frames"> </div> </div> <div class="footer"> <div class="controls row"> <a class="btn btn-success capture-background" href="#">Capturar imagem de fundo</a> <a class="btn btn-danger disabled stop-segmentation" href="#">stop</a> </div> </div> </div> <!--[if lt IE 9]>
-    <script src="scripts/oldieshim.693a1bc0.js"></script>
-    <![endif]--> <script src="scripts/vendor.2ad8f863.js"></script> <script src="bower_components/tracking/build/data/eye-min.js"></script> <script src="bower_components/tracking/build/data/face-min.js"></script> <script src="bower_components/tracking/build/data/mouth-min.js"></script> <script src="bower_components/jsfeat/build/jsfeat.js"></script> <script src="scripts/scripts.3b300e34.js"></script>  
+    <![endif]-->
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li><a class="btn" href="#"><span class="glyphicon glyphicon-home"></span> Aspect</a></li>
+        </ul>
+        <h3 class="text-muted">Aspect - biometria - TEST workspace</h3>
+      </div>
+      <div class="aspect-main">
+          <div class="row">
+              <video id="video" width="320" height="240" preload autoplay loop muted></video>
+              <canvas id="canvas" width="320" height="240"></canvas>
+          </div>
+          <div class="row">
+            <canvas style="border: solid 1px black" id="preview" width="320" height="240"></canvas>
+           </div>
+           <div class="frames">
+           </div>
+      </div>
+      <div class="footer">
+          <div class="controls row">
+            <a class="btn btn-success capture-background" href="#">Capturar imagem de fundo</a>
+            <a class="btn btn-danger disabled  stop-segmentation" href="#">stop</a>
+          </div>
+      </div>
+    </div>
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="bower_components/dat-gui/build/dat.gui.js"></script>
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/tracking/build/tracking.js"></script>
+    
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <script src="bower_components/tracking/build/data/eye-min.js"></script>
+    <script src="bower_components/tracking/build/data/face-min.js"></script>
+    <script src="bower_components/tracking/build/data/mouth-min.js"></script>
+    <script src="bower_components/jsfeat/build/jsfeat.js"></script>
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="http://inspirit.github.io/jsfeat/js/frontalface.js"></script>
+
+    <script src="scripts/human_body.js"></script>
+    <script src="scripts/segmentation.js"></script>
+    <script src="scripts/measurements.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/test_overrides.js"></script>
+    <!-- endbuild -->
+</body>
+</html>
