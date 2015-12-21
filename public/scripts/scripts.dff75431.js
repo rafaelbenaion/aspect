@@ -4329,26 +4329,30 @@
   this.VALID_EMAIL = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
   this.PublishInfo = (function() {
-    PublishInfo.url = "https://aspect-server.herokuapp.com/measures";
+    PublishInfo.site = "https://aspect-server.herokuapp.com";
 
-    PublishInfo.upload = function(data, success, error) {
-      return $.post(PublishInfo.url, data, success, "json");
+    PublishInfo.path = "measures";
+
+    PublishInfo.upload = function(url, data, success, error) {
+      return $.post(url, data, success, "json");
     };
 
     function PublishInfo(user, measures) {
       this.user = user;
       this.measures = measures;
+      console.log("publishing info from: ", this.user, this.measures);
     }
 
     PublishInfo.prototype.perform = function(onSucess, onError) {
-      var data;
+      var data, url;
+      url = "" + PublishInfo.site + "/" + PublishInfo.path;
       data = {
         measure: {
           from: this.user,
           set: this.measures
         }
       };
-      return PublishInfo.upload(data, onSucess, onError);
+      return PublishInfo.upload(url, data, onSucess, onError);
     };
 
     return PublishInfo;
@@ -4361,12 +4365,14 @@
       this.front = front;
       this.side = side;
       this.modal = modal;
-      this.button = this.modal.find(".upload-data");
+      this.button = this.modal.find(".btn-success");
       this.email = this.modal.find("#email");
     }
 
-    ShowResultsStep.prototype.onOpenModal = function() {
+    ShowResultsStep.prototype.perform = function() {
       var up;
+      this.modal.modal();
+      this.email.focus();
       up = this.uploadData.bind(this);
       this.email.on('keyup', function(event) {
         if (event.keyCode === 13) {
@@ -4374,11 +4380,7 @@
         }
       });
       this.button.on("click", up);
-      return this.setupUI();
-    };
-
-    ShowResultsStep.prototype.perform = function() {
-      return this.email.focus();
+      return setTimeout("showResultsStep.setupUI()", 500);
     };
 
     ShowResultsStep.prototype.setupUI = function() {
@@ -4428,7 +4430,7 @@
     };
 
     ShowResultsStep.prototype.uploadData = function() {
-      var canvas, email, error, footer, front, imageContent, info, m, measure, onError, onSucess, pose, progress, self, side, success, uploadingImg, _i, _len, _ref, _ref1, _ref2, _results;
+      var canvas, email, error, footer, front, imageContent, info, m, measure, onError, onSucess, pose, progress, self, side, success, uploadingImg, _i, _len, _ref, _ref1, _ref2;
       self = window.showResultsStep;
       email = self.email.val();
       if (email.length === 0) {
@@ -4438,8 +4440,6 @@
         this.email.attr("placeholder", "Digite um email válido :(");
         return;
       }
-      this.button.prop('disabled', true);
-      this.button.val("Preparando medidas");
       self.user = {
         email: email
       };
@@ -4473,35 +4473,21 @@
       footer = self.modal.find(".modal-footer");
       uploadingImg = new Image();
       footer.append(uploadingImg);
-      onSucess = function(data) {
-        console.log("publish info sucessfully", data);
-        self.button.val("Ok! Medidas salvas!");
-        return self.button.parent().append("<a href='" + PublishInfo.url + "/" + data.id + "'>Acesse suas medidas aqui.</a>");
-      };
-      onError = function(data) {
-        console.error("error sending data", data);
-        self.button.val("Ops! Erro enviando medidas! (Tentar Novamente)");
-        return self.button.prop("disabled", false);
-      };
       _ref2 = [self.front, self.side];
-      _results = [];
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
         pose = _ref2[_i];
         pose.drawMeasurements();
         canvas = pose.canvasLarge;
         uploadingImg.src = canvas.toDataURL("image/png");
         imageContent = canvas.toDataURL().split(',', 2)[1];
-        self.button.val("Uploading image... ");
         success = function(blob) {
           var _base;
           console.log("Store successful:", blob);
-          self.button.val("ok!");
           canvas.remote_url = blob.url;
           (_base = self.publisher.user).images || (_base.images = []);
           self.publisher.user.images.push(blob.url);
           if (self.publisher.user.images.length === 2) {
             footer.empty();
-            self.button.val("Publishing measures...");
             return self.publisher.perform(onSucess, onError);
           }
         };
@@ -4509,11 +4495,22 @@
           return console.error("Store error:", err);
         };
         progress = function(percent) {
-          return self.button.val("Uploading " + percent + "%");
+          return UI.infoUser("Uploading " + percent);
         };
-        _results.push(ImageStore.upload(imageContent, success, error, progress));
+        filepicker.setKey('AN8l6x4Shekrztt8K7Xxwz');
+        filepicker.store(imageContent, {
+          mimetype: 'image/png',
+          base64decode: true
+        }, success, error, progress);
       }
-      return _results;
+      console.log("publisher", self.publisher);
+      onSucess = function(data) {
+        console.log("publish info sucessfully", data);
+        return self.modal.modal('hide');
+      };
+      return onError = function(data) {
+        return console.error("ops!", data);
+      };
     };
 
     return ShowResultsStep;
