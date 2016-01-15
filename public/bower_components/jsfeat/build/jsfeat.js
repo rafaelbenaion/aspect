@@ -74,7 +74,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
             this.u8 = new Uint8Array(this.buffer);
             this.i32 = new Int32Array(this.buffer);
             this.f32 = new Float32Array(this.buffer);
-            this.f64 = new Float32Array(this.buffer);
+            this.f64 = new Float64Array(this.buffer);
         }
         return data_t;
     })();
@@ -1731,7 +1731,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
     	var T1 = new jsfeat.matrix_t(3, 3, jsfeat.F32_t|jsfeat.C1_t);
     	var AtA = new jsfeat.matrix_t(6, 6, jsfeat.F32_t|jsfeat.C1_t);
     	var AtB = new jsfeat.matrix_t(6, 1, jsfeat.F32_t|jsfeat.C1_t);
-
+    	
     	var affine2d = (function () {
 
 	        function affine2d() {
@@ -1852,16 +1852,16 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
 				    sMy += Math.abs(from[i].y - cMy);
 				}
 
-			    if( Math.abs(smx) < jsfeat.EPSILON
-			    	|| Math.abs(smy) < jsfeat.EPSILON
-			    	|| Math.abs(sMx) < jsfeat.EPSILON
+			    if( Math.abs(smx) < jsfeat.EPSILON 
+			    	|| Math.abs(smy) < jsfeat.EPSILON 
+			    	|| Math.abs(sMx) < jsfeat.EPSILON 
 			    	|| Math.abs(sMy) < jsfeat.EPSILON ) return 0;
 
 			    smx = count/smx; smy = count/smy;
 			    sMx = count/sMx; sMy = count/sMy;
 
-			    t0d[0] = sMx; 	t0d[1] = 0; 	t0d[2] = -cMx*sMx;
-			    t0d[3] = 0; 	t0d[4] = sMy; 	t0d[5] = -cMy*sMy;
+			    t0d[0] = sMx; 	t0d[1] = 0; 	t0d[2] = -cMx*sMx; 
+			    t0d[3] = 0; 	t0d[4] = sMy; 	t0d[5] = -cMy*sMy; 
 			    t0d[6] = 0; 	t0d[7] = 0; 	t0d[8] = 1;
 
 				t1d[0] = 1.0/smx; 	t1d[1] = 0; 		t1d[2] = cmx;
@@ -2290,7 +2290,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
 
 			        numinliers = find_inliers(kernel, model, from, to, count, sigma, err, curr_mask.data);
 			        if(mask) curr_mask.copy_to(mask);
-
+			        
 			        result = numinliers >= model_points;
 			    }
 
@@ -2345,7 +2345,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
 
                 if(sx1 > fsx1) {
                     xofs[k++] = (dx * ch)|0;
-                    xofs[k++] = ((sx1 - 1)*ch)|0;
+                    xofs[k++] = ((sx1 - 1)*ch)|0; 
                     xofs[k++] = ((sx1 - fsx1) * 0x100)|0;
                     xofs_count++;
                 }
@@ -2439,7 +2439,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                 for(sx = sx1; sx < sx2; sx++){
                     xofs_count++;
                     xofs[k++] = (sx * ch)|0;
-                    xofs[k++] = (dx * ch)|0;
+                    xofs[k++] = (dx * ch)|0; 
                     xofs[k++] = scale;
                 }
                 if(fsx2 - sx2 > 1e-3) {
@@ -2483,7 +2483,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     dy++;
                 } else {
                     for(dx = 0; dx < nw * ch; dx++) {
-                        sum[dx] += buf[dx];
+                        sum[dx] += buf[dx]; 
                         buf[dx] = 0;
                     }
                 }
@@ -2497,7 +2497,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
             var i=0,j=0,k=0,sp=0,dp=0,sum=0,sum1=0,sum2=0,sum3=0,f0=filter[0],fk=0;
             var w2=w<<1,w3=w*3,w4=w<<2;
             // hor pass
-            for (; i < h; ++i) {
+            for (; i < h; ++i) { 
                 sum = src_d[sp];
                 for (j = 0; j < half_kernel; ++j) {
                     buf[j] = sum;
@@ -2514,7 +2514,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     buf[j + half_kernel] = sum;
                 }
                 for (j = 0; j <= w-4; j+=4) {
-                    sum = buf[j] * f0,
+                    sum = buf[j] * f0, 
                     sum1 = buf[j+1] * f0,
                     sum2 = buf[j+2] * f0,
                     sum3 = buf[j+3] * f0;
@@ -2560,8 +2560,8 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     buf[j + half_kernel] = sum;
                 }
                 dp = i;
-                for (j = 0; j <= h-4; j+=4, dp+=w4) {
-                    sum = buf[j] * f0,
+                for (j = 0; j <= h-4; j+=4, dp+=w4) { 
+                    sum = buf[j] * f0, 
                     sum1 = buf[j+1] * f0,
                     sum2 = buf[j+2] * f0,
                     sum3 = buf[j+3] * f0;
@@ -2591,7 +2591,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
             var i=0,j=0,k=0,sp=0,dp=0,sum=0.0,sum1=0.0,sum2=0.0,sum3=0.0,f0=filter[0],fk=0.0;
             var w2=w<<1,w3=w*3,w4=w<<2;
             // hor pass
-            for (; i < h; ++i) {
+            for (; i < h; ++i) { 
                 sum = src_d[sp];
                 for (j = 0; j < half_kernel; ++j) {
                     buf[j] = sum;
@@ -2608,7 +2608,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     buf[j + half_kernel] = sum;
                 }
                 for (j = 0; j <= w-4; j+=4) {
-                    sum = buf[j] * f0,
+                    sum = buf[j] * f0, 
                     sum1 = buf[j+1] * f0,
                     sum2 = buf[j+2] * f0,
                     sum3 = buf[j+3] * f0;
@@ -2654,8 +2654,8 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     buf[j + half_kernel] = sum;
                 }
                 dp = i;
-                for (j = 0; j <= h-4; j+=4, dp+=w4) {
-                    sum = buf[j] * f0,
+                for (j = 0; j <= h-4; j+=4, dp+=w4) { 
+                    sum = buf[j] * f0, 
                     sum1 = buf[j+1] * f0,
                     sum2 = buf[j+2] * f0,
                     sum3 = buf[j+3] * f0;
@@ -2746,7 +2746,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                 dst.resize(w, h, src.channel);
 
                 // first pass
-                // no need to scale
+                // no need to scale 
                 //data_u8 = src.data;
                 //data_i32 = tmp;
                 for (y = 0; y < h; ++y) {
@@ -2782,7 +2782,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                         nextPixelIndex ++;
                         previousPixelIndex ++;
                     }
-
+                    
                     hold = data_u8[nextPixelIndex-1];
                     for(; x < w; ++x, dstIndex += h) {
                         data_i32[dstIndex] = sum;
@@ -3103,7 +3103,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                 jsfeat.cache.put_buffer(buf1_node);
             },
 
-            // please note:
+            // please note: 
             // dst_(type) size should be cols = src.cols+1, rows = src.rows+1
             compute_integral_image: function(src, dst_sum, dst_sqsum, dst_tilted) {
                 var w0=src.cols|0,h0=src.rows|0,src_d=src.data;
@@ -3240,7 +3240,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                 var w=src.cols,h=src.rows,src_d=src.data;
 
                 dst.resize(w, h, src.channel);
-
+                
                 var dst_d=dst.data;
                 var i=0,j=0,grad=0,w2=w<<1,_grad=0,suppress=0,f=0,x=0,y=0,s=0;
                 var tg22x=0,tg67x=0;
@@ -3250,7 +3250,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                 var buf_node = jsfeat.cache.get_buffer((3 * (w + 2))<<2);
                 var map_node = jsfeat.cache.get_buffer(((h+2) * (w + 2))<<2);
                 var stack_node = jsfeat.cache.get_buffer((h * w)<<2);
-
+                
 
                 var buf = buf_node.i32;
                 var map = map_node.i32;
@@ -3464,7 +3464,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     }
                 }
             },
-
+            
             // Basic RGB Skin detection filter
             // from http://popscan.blogspot.fr/2012/08/skin-detection-in-digital-images.html
             skindetector: function(src,dst) {
@@ -3483,7 +3483,7 @@ var jsfeat = jsfeat || { REVISION: 'ALPHA' };
                     } else {
                         dst[i] = 0;
                     }
-                }
+                }                
             }
         };
     })();
@@ -3758,7 +3758,7 @@ The references are:
     //
 
     var yape06 = (function() {
-
+        
         var compute_laplacian = function(src, dst, w, h, Dxx, Dyy, sx,sy, ex,ey) {
             var y=0,x=0,yrow=(sy*w+sx)|0,row=yrow;
 
@@ -4575,39 +4575,39 @@ The references are:
 					// describe the patch
 					patt = 0;
 					for (b = 0; b < DESCR_SIZE; ++b) {
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val = (t0 < t1)|0;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 1;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 2;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 3;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 4;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 5;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 6;
-
+			            
 			            t0 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            t1 = patch_d[patch_off + bit_pattern_31_[patt+1] * 32 + bit_pattern_31_[patt]]; patt += 2
 			            val |= (t0 < t1) << 7;
-
+			            
 			            descr_d[descr_off+b] = val;
 			        }
 			        descr_off += DESCR_SIZE;
@@ -4694,7 +4694,7 @@ The references are:
                     dstep = lw << 1;
                     img_prev = prev_imgs[level].data;
                     img_next = next_imgs[level].data;
-
+                    
                     brd_r = (lw - win_size)|0;
                     brd_b = (lh - win_size)|0;
 
